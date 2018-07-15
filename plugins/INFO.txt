@@ -1,0 +1,43 @@
+This directory contains plug-ins that are used by luscus in order to open some file format.
+
+Each time someone tries to open or save a file in luscus, luscus execute a plug-in in order to convert the file to the luscus format or vice versa. 
+
+Luscus plug-ins are simple programs or scripts that take a file name as the argument and write a new file in different format. 
+For example, xyz2gv converts xyz file to the luscus format. One can convert a xyz file with the command:
+
+xyz2gv.exe test.xyz
+
+As a result, file test.lus is created.
+Plug-ins can work as standalone programs without the need to be called from luscus. The command above can be invoked in a shell whenever one wants to convert a xyz file to a luscus file.
+
+In order to be executed by luscus, a plug-in must be registered in the configuration file named plugin.rc.
+Each line in the plugin.rc describes one plug-in. Lines are a list of keyword=value fields separated by spaces. String variables containing spaces can be quoted in order to be interpreted as one string.
+
+keywords are:
+
+libpath		absolute path to the plug-in
+extension	extension of the converted file. If files are opened with luscus by a command line, the right plug-in will be identified by this field.
+description	Short description of a file format.
+forward		plug-in name for converting the file format to the luscus file.
+backward	plug-in name for converting the luscus file format to the another one.
+
+example:
+
+libpath=/home/gkova/bin extension=xyz description="cartesian coordinates" forward=xyz2gv.exe backward=gv2xyz.exe
+
+Luscus configuration files are located in the configurational directory.
+The luscus configurational directory is in one of the places:
+
+- path pointed by the $LUSCUS_DIR environment variable
+- $HOME/.luscus (%LOCALAPPDATA%/luscus in windows; %LOCALAPPDATA% is environment variable)
+- /etc/luscus  (%ALLUSERSPROFILE%/luscus in windows; %ALLUSERSPROFILE% is environment variable)
+- directory with the luscus program
+
+Luscus searches these four locations in that order until it finds the valid configurational directory.
+
+
+
+Plug-ins should report version number if executed with the --version argument:
+
+xyz2gv.exe --version
+

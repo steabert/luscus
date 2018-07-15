@@ -1,0 +1,15 @@
+make unselect button smaller
+option expand molecule does not update
+
+Undo sometimes activates "deterime bonding"
+After luscus checks for cofig files in $HOME.luscus; if not found search for config files in an another, general location
+Add functionality for shifing molecules in multiview
+Check if input/output files can contain spaces
+Make trajectories playable; adjust play-speed!
+Make videos from trajectories; adjust framerat
+Introduce luscus keyword for trajectories that will treat geometries as equal
+Make a button for playing trajectories
+Make a button for recording movies from trajectories
+
+Follow a coordinate in a trajectory and make a graph from it.
+

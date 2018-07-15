@@ -1,0 +1,16 @@
+// the configured options and settings for Tutorial
+#define luscus_VERSION_MAJOR @luscus_VERSION_MAJOR@
+#define luscus_VERSION_MINOR @luscus_VERSION_MINOR@
+#define luscus_VERSION_REVISION @luscus_VERSION_REVISION@
+#define VERSION "@luscus_VERSION_MAJOR@.@luscus_VERSION_MINOR@.@luscus_VERSION_REVISION@ beta"
+
+#cmakedefine HAVE_STRCASESTR
+#cmakedefine HAVE_STRCASECMP
+
+#ifndef HAVE_STRCASESTR
+char *strcasestr(char*, const char*);
+#endif
+
+#ifndef HAVE_STRCASECMP
+int strcasecmp(const char*, const char*);
+#endif

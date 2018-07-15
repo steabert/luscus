@@ -1,0 +1,125 @@
+   LUSCUS installation guide. 26/01 2018. 
+
+
+LUSCUS as Graphical User Interface depends on many graphical libraries,
+which are different for different operating systems. 
+
+Note, that these graphical libries might be installed at your computer 
+only as run-time packages, instead of full installation, which includes
+headers and libraries for development. 
+
+I. Check and install graphical libraries (devel versions). 
+----------------
+
+The list of libraries:
+gl
+glu
+gtk+-2.0 or gtk+-3.0
+OpenGL
+gtkglext
+
+CMake installation should spot missing libraries, but it is
+advisable to check these libraries before running cmake command. 
+
+To check that you have installed these packages, use e.g. locate 
+command, and search for headers .h and libraries with extension .a,
+or .so.
+
+Example: 
+locate glu.h
+locate libGLU
+
+in many system installing gtkglext-dev (or gtkglext-devel) will
+install via dependencies all needed packages. 
+
+II. Important: LUSCUS package
+----------------
+ 
+Luscus package includes luscus executable, configuration files and plug-ins. 
+    - Luscus executable should be located in somewhere in your PATH.
+    - Configuration files can located at:
+          - directory pointed by environment $LUSCUS_DIR
+          - directory $HOME/.luscus
+          - directory /etc/luscus/
+          - directory of luscus executable
+    - Plug-ins can be installed in any location, the direct path 
+        to plug-ins is set in configurations files. 
+
+Relocation of the parts of Luscus package will break the 
+functionality of the code. 
+
+--------------------
+
+III. Compiling on Linux
+---------------------
+
+There are several options for compiling LUSCUS under linux, 
+depending on the libraries installed on your computer. 
+LUSCUS can be compiled against [gtk+-2.0] or [gtk+-3.0] graphical libraries. 
+Also, LUSCUS can be also compiled with or without [gtkglext] library. 
+
+Please note that some functionality of LUSCUS, e.g. screenshots with 
+large resolution are enabled only for binaries that are compiled 
+with gtkglext library. Three combinations of libraries are tested:
+
+* gtk+-2.0 with gtkglext
+* gtk+-2.0 without gtkglext
+* gtk+-3.0 without gtkglext
+
+steps for compiling luscus:
+
+1. Install required graphical libraries
+   Use program package tools (like apt or rpm) from linux distribution (advised), 
+   or download source code of these packages and compile them. Make sure to 
+   install package with development files. In Debian or Ubuntu linux distributions 
+   the best option is to install  libgtkglext1-dev package, since all other 
+   required libraries are dependent on it and will be installed automatically.
+
+2. Download luscus source from this 
+   [link](https://sourceforge.net/projects/luscus/?source=directory).
+
+3. uncompress and untar the source
+   gunzip luscus_0.8.*.tar.gz
+   tar -xvf luscus_0.8.*.tar
+
+4. select build directory (cd build)
+
+5. run cmake 
+   Note, that by default LUSCUS will be installed globally 
+   in case if you do not have root permissions use 
+    cmake .. -DCMAKE_INSTALL_PREFIX=$HOME
+   If you are root, you can type
+    cmake ..
+   Fix all problems, detected by cmake
+
+6. run make: make
+
+7. install luscus: sudo make install
+   Note that make install places all parts of Luscus package into
+   proper locations. 
+
+  If you install Luscus for several users, be sure that 
+  all users have an access to plug-ins. The simplest way to 
+  achieve it to use LUSCUS_DIR variable. 
+
+IV. Compiling under Windows (experimental)
+-----------------------
+
+Gtk+ applications are compiled with [Mingw] environment. 
+For instalation of Mingw and gtk+ under windows please refer 
+to their webpages. Gtkglext must be installed also.
+
+The installation is silmilar to Linux, but use 
+ cmake -G "MSYS Makefiles" ..
+
+Make sure that plugins and configurational files are installed in 
+directory $LOCALAPPDATA/luscus. Alternatively, use environment 
+variable LUSCUS_DIR
+
+V. Compiling on Mac OS
+----------------------
+
+Use port package manager and install gtkglext package
+
+The rest is similar to Linux installation. 
+

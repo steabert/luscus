@@ -1,0 +1,22 @@
+Luscus: molecular viewer and editor for MOLCAS;
+G. Kovacevic, V. Veryazov, J. Cheminformatics 2015 7:16 1-10
+
+
+bibtex:
+
+@Article{Kovačević2015,
+author="Kova{\v{c}}evi{\'{c}}, Goran
+and Veryazov, Valera",
+title="Luscus: molecular viewer and editor for MOLCAS",
+journal="Journal of Cheminformatics",
+year="2015",
+volume="7",
+number="1",
+pages="1--10",
+abstract="The novel program for graphical display and editing of molecular systems, luscus, is described. The program allows fast and easy building and/or editing different molecular structures, up to several thousands of atoms large. Luscus is able to visualise dipole moments, normal modes, molecular orbitals, electron densities and electrostatic potentials. In addition, simple geometrical objects can be rendered in order to reveal a geometrical feature or a physical quantity. The program is developed as a graphical interface for the MOLCAS program package, however its adaptive nature makes possible to use luscus with other computational program packages and chemical formats. All data files are opened via simple plug-ins which makes easy to implement a new file format in luscus. The easiness of editing molecular geometries makes luscus suitable for teaching students chemical concepts and molecular modelling.",
+issn="1758-2946",
+doi="10.1186/s13321-015-0060-z",
+url="http://dx.doi.org/10.1186/s13321-015-0060-z"
+}
+
+

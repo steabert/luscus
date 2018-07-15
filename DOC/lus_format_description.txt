@@ -1,0 +1,215 @@
+his document describes the full syntax of the lus file format.
+
+File syntax
+
+0. General
+The syntax of a luscus file is extension of the XYZ format [see specification at: http://openbabel.org/wiki/XYZ]. The luscus file is ASCII file and is intended to be human-redable. A luscus file consists of sections and each section consists of one or more blocks. Data in each block are presented in one or more lines. Data items in each line are divided by whitespaces (ASCII value 32) or horizontal tabs (ASCII value 9). 
+
+0.1 Sections
+Each section contains data that are to be displayed together. A section can contain more than one block of the same type. Some data types are unique for a section (energy, rms grad, max grad, dipole) and if more than one block of these data types are given, the last block will overwrite the data from the previous blocks.
+Sections are divided with the keyword <END>. Luscus file can contain one or more sections. The keyword <END> can be omitted and in this case it is assumed that file contains only one section.
+
+0.2 Blocks
+Block is a group of items that describe same type of information.
+Each block starts with keyword enclosed in angle brackets and ends with the same keyword escaped with the '/' sign and enclosed in angle brackets. Keywords that mark begin and end of blocks are case insensitive.
+
+0.3 Keywords
+Optional data in blocks are defined with keywords followed by the equal sign (ASCII value 61), followed by the value. Keywords are case insensitive. Keyword, equal sign and value data can be separated with whitespace (ASCII value 32) or horizontal tab (ASCII value 9).
+
+1.0 Coordinate block (mandatory)
+Each section must start with coordinate block. Section can contain only one coordinate block. Coordinate block is identical to XYZ file format.
+First line in coordinate block contains number of atoms.
+Second line contains comment
+All other lines in the coordinate block contain atom symbol, followed by three components of the atoms cartesian coordinate (X, Y, Z) in Ångström units.
+
+2.0 Atom data block (optional)
+Atom data block starts with a line with single keyword <ATOM> and terminates with the line with single keyword </ATOM>
+Second line contains attributes for the first atom, written as optional data (see section keywords).
+The second line is repeated for each atom in the molecule. Number of atoms should be same as defined in coordinate subsection.
+Keywords within atom data subsection are:
+NAME	(string) alternative atom name
+NUMBER	(integer) alternative atom number
+MULLIKEN_CHARGE	(float) mulliken charge
+LOPROP_CHARGE (float) loprop charge
+SYMMETRY (integer) symmetry (not used)
+
+3.0 Bond data block (optional)
+Bond data block starts with a line with single keyword <BOND> and ends with line with single keyword </BOND>.
+Second line contains keywords
+Fourth line contains two numerical indices of the bonded atoms followed by the bond order index. Atom indices are defined by order of appearance in the coordinate subsection.
+Fourth line is repeated for each bond defined. 
+
+keywords:
+AUTOMATIC	(integer variable) allowed values 0 or 1. weather the bonding should be determined (1) by interatomic distance or not (0). Omitting this keyword means automatic determination of bonding. In the case of automatic determination, additional bond order data overwrites automatically determined bonds.
+
+bond order indices:
+0	No bond, atoms are not connected
+1	single bond
+2	double bond
+3	triple bond
+4	partial bond
+5	bond order 1.5
+6	line between atoms
+
+4.0 Vibration block (optional)
+Vibration block starts with a line with single keyword <VIBRATION> and ends with line with single keyword </VIBRATION>
+Second line contains keywords
+Third line contains numerical values of components of the normal modes along cartesian coordinates (X, Y, Z) for the first atom.
+Third line is repeated for each atom in the molecule.
+Vibration block describes one normal mode.
+
+keywords:
+FREQ		(float) frequency of vibration in cm^-1 (mandatory)
+IR_INT		(float) Intensity of the vibration in IR spectrum
+RAMAN_INT	(float) Intensity of the vibration in Raman spectrum
+
+5.0 Dipole block (optional)
+Vibration block starts with a line with single keyword <DIPOLE> and ends with line with single keyword </DIPOLE>
+Second line contains three numerical values of the cartesian components of the dipole moment.
+Each section can have only one dipole defined. Multiple appearance of dipole subsections in section leads to overwrite of every but last dipole moment.
+
+6.0 Energy block (optional)
+ Energy block starts with a line with single keyword <ENERGY> and ends with line with single keyword </ENERGY>
+ Second line contains only numerical value of energy.
+
+7.0 rms_grad block (optional)
+  rms_grad block starts with a line with single keyword <RMS_GRAD> and ends with line with single keyword </RMS_GRAD>
+   Second line contains only numerical value root mean square value of gradient.
+
+8.0 max_grad block (optional)
+  rms_grad block starts with a line with single keyword <MAX_GRAD> and ends with line with single keyword </MAX_GRAD>
+   Second line contains only numerical value root mean square value of maximum component of the gradient.
+
+9.0 Vector block (optional)
+Vibration block starts with a line with single keyword <VECTOR>  and ends with line with single keyword </VECTOR>
+Second line contains keywords 
+Third line contains three numerical values of cartesian components of the starting point (basis of arrow) of the vector.
+Fourth line contains three numerical values of cartesian components of the ending point (tip of arrow) of the vector.
+
+keywords:
+RADIUS	(float) numerical value of radius of the arrow (default = 0.05)
+RED	(float) numerical value of red colour component of the arrow (allowed values 0.0 - 1.0)
+GREEN	(float) numerical value of green colour component of the arrow (allowed values 0.0 - 1.0)
+BLUE	(float) numerical value of blue colour component of the arrow (allowed values 0.0 - 1.0)
+SHARPNESS(float) numerical value that makes the arrow more or less sharp (allowed values 0.0 - 1.0)
+
+10.0 Triangle block (optional)
+Triangle block starts with a line with single keyword <TRIANGLE> and ends with line with single keyword </TRIANGLE>
+Second line contains keywords 
+Third, fourth and fifth lines contain three numerical values of cartesian components of three points that define triangle
+
+keywords:
+TRANSPARENCY	(float) numerical value that makes the triangle more or less transparent (allowed values 0.0 - 1.0)
+RED	(float) numerical value of red colour component of the triangle (allowed values 0.0 - 1.0)
+GREEN	(float) numerical value of green colour component of the triangle (allowed values 0.0 - 1.0)
+BLUE	(float) numerical value of blue colour component of the triangle (allowed values 0.0 - 1.0)
+
+11.0 Surface block (optional)
+Surface block starts with a line with single keyword <SURFACE>  and ends with line with single keyword </SURFACE>
+Second line contains keywords 
+Third, fourth and fifth lines contain three numerical values of cartesian components of three points that define the surface
+
+keywords:
+TRANSPARENCY	(float) numerical value that makes the surface more or less transparent (allowed values 0.0 - 1.0)
+RED	(float) numerical value of red colour component of the surface (allowed values 0.0 - 1.0)
+GREEN	(float) numerical value of green colour component of the surface (allowed values 0.0 - 1.0)
+BLUE	(float) numerical value of blue colour component of the surface (allowed values 0.0 - 1.0)
+
+12.0 Sphere block (optional)
+Sphere block starts with a line with single keyword <SPHERE> and ends with line with single keyword </SPHERE>.
+Second line contains keywords (or is empty).
+Third line contains three numerical values of cartesian components of centre of the sphere.
+
+keywords:
+RADIUS		(float)	radius of the sphere
+TRANSPARENCY	(float) numerical value that makes the surface more or less transparent (allowed values 0.0 - 1.0)
+RED	(float) numerical value of red colour component of the surface (allowed values 0.0 - 1.0)
+GREEN	(float) numerical value of green colour component of the surface (allowed values 0.0 - 1.0)
+BLUE	(float) numerical value of blue colour component of the surface (allowed values 0.0 - 1.0)
+
+13.0 Cell block
+Cell block starts with a line with single keyword <CELL> and ends with line with single keyword </CELL>
+Second line contains keywords 
+Third line contains three numerical values of cartesian components of one vertex of the parallelepiped.
+Fourth, fifth and sixth line contain three vertices, adjoining to the vertex defined in third line.
+
+keywords:
+TRANSPARENCY	(float) numerical value that makes the parallelepiped more or less transparent (allowed values 0.0 - 1.0)
+RED	(float) numerical value of red colour component of the parallelepiped (allowed values 0.0 - 1.0)
+GREEN	(float) numerical value of green colour component of the parallelepiped (allowed values 0.0 - 1.0)
+BLUE	(float) numerical value of blue colour component of the parallelepiped (allowed values 0.0 - 1.0)
+
+14.0 text block (optional)
+Text block writes text on a screen. It starts with single keyword <TEXTBOX> and ends with line with single keyword </TEXTBOX>.
+Second line contains keywords 
+Third line contains definition of a font
+Fourth line contains the text to be displayed on a screen.
+
+keywords:
+
+RED	(float) numerical value of red colour component of the text (allowed values 0.0 - 1.0)
+GREEN	(float) numerical value of green colour component of the text (allowed values 0.0 - 1.0)
+BLUE	(float) numerical value of blue colour component of the text (allowed values 0.0 - 1.0)
+X	(integer) x coordinate of the text on a screen (in pixel units)
+Y	(integer) y coordinate of the text on a screen (in pixel units)
+
+15.0 editable block (optional)
+
+Editable block marks the luscus file editable or not. This block influences all sections in a luscus file (entire luscus file).
+It starts with single keyword <EDITABLE> and ends with line with single keyword </EDITABLE>.
+Second line contains only one of two possible keywords (without values).
+
+keywords:
+YES	luscus file is editable
+NO	luscus file is not editable
+
+#16.0 sleep block (optional)
+#Sleep block suspends reading of luscus file for a certain number of seconds.
+#It starts with single keyword <SLEEP> and ends with line with single keyword </SLEEP>.
+#Second line contains the number of seconds.
+
+17.0 write block (optional)
+Write block writes a message above the molecule screen. 
+It starts with single keyword <WRITE> and ends with line with single keyword </WRITE>.
+Second line contains the message to be displayed above the screen.
+
+18.0 grid block (optional)
+
+Grid block starts with a line with single keyword <GRID> and ends with line with single keyword </GRID>
+second line contains keywords
+third line is reserved for N_INDEX keyword
+fourth line is reserved Net keyword (grid size)
+fifth line is reserved Origin keyword (origin of the grid???)
+sixth, seventh and eighth lines are reserved for Axis_1, Axis_2, Axis_3 keywords
+ninth line is reserved for the Orboff keyword with value of the position of binary data footer follows
+after that, the grid keyword lines follows. grid keyword lines are repeated for each grid
+
+There are also sub-blocks: <DENSITY>, which contains binary data, <BASIS>, which contains basis set data and <INPORB>, which contains inporb data.
+
+keywords:
+N_of_MO		(int)	total number of orbitals
+N_of_Grids	(int)	number of grids
+N_of_Points	(int)	number of points
+Block_Size	(int)	maximal number of points in block
+N_Blocks	(int)	number of blocks per orbital
+Is_cutoff	(int)	
+CutOff		(float)	
+N_P		(int)	number of points()
+
+N_INDEX		followed by seven integer values that represent number of orbitals of each type
+NET		followed by three integer values that represent grid dimensions
+ORIGIN 		followed by three float values ...
+AXIS_1 		followed by three float values ...
+AXIS_2 		followed by three float values ...
+AXIS_3 		followed by three float values ...
+
+grid keywords:
+GridName	(string)	"Orbital" or some custom data; Any value other than "Orbital" will be accessed by separate button in GUI.
+sym		(int)		symmetry number (relevant only if GridName=Orbital)
+index		(int)		unique index among orbitals with same symmetry number (relevant only if GridName=Orbital)
+Energ		(float)		energy (relevant only if GridName=Orbital)
+occ		(float)		occupation number (relevant only if GridName=Orbital)
+type		(string)	orbital type allowed values: s, i, u, f, 1, 2, 3, d (relevant only if GridName=Orbital)
+
+
+
